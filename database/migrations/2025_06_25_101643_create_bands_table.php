@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('location')->nullable();
-            $table->string('invite_code');
+            $table->string('invite_code')->unique();
             $table->timestamps();
         });
     }
