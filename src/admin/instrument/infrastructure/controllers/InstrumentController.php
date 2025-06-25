@@ -5,7 +5,9 @@ namespace Src\admin\instrument\infrastructure\controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Instrument as ModelsInstrument;
+use Src\admin\instrument\application\DeleteInstrumentCaseUse;
 use Src\admin\instrument\application\GetAllInstrumentUseCase;
+use Src\admin\instrument\application\GetByIdInstrumentCaseUse;
 use Src\admin\instrument\application\SaveInstrumentCaseUse;
 use Src\admin\instrument\domain\entities\Instrument;
 use Src\admin\instrument\infrastructure\repositories\EloquentInstrumentRepository;
@@ -24,7 +26,10 @@ final class InstrumentController extends Controller
         $getAllUseCase = new GetAllInstrumentUseCase($this->instrumentRepository);
         $instruments = $getAllUseCase->execute();
 
-        return view('admin.instruments.index', compact('instruments'));
+        return view('admin.instruments.index', [
+            'instruments' => $instruments,
+            'routePrefix' => 'instrument',
+        ]);
     }
 
     /**
@@ -39,6 +44,7 @@ final class InstrumentController extends Controller
         return view('admin.instruments.form', [
             'instrument' => new ModelsInstrument(),
             'fields' => $fields,
+            'routePrefix' => 'instrument'
         ]);
     }
 
@@ -55,31 +61,47 @@ final class InstrumentController extends Controller
             )
         );
 
-        return redirect()->route('instruments.index')->with('success', 'Instrument created successfully.');
+        return redirect()->route('instrument.index')->with('success', 'Instrument created successfully.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+    public function show(string $id) {}
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        //
+        $fields = [
+            'name' => 'text',
+        ];
+
+        $useCase = new GetByIdInstrumentCaseUse($this->instrumentRepository);
+        $instrument = $useCase->execute($id);
+
+        return view('admin.instruments.form', [
+            'instrument' => $instrument,
+            'fields' => $fields,
+            'isEdit' => true,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreateInstrumentRequest $request, string $id)
     {
-        //
+        $useCase = new SaveInstrumentCaseUse($this->instrumentRepository);
+        $useCase->execute(
+            new Instrument(
+                $id,
+                $request->name
+            )
+        );
+
+        return redirect()->route('instrument.index')->with('success', 'Instrument updated successfully.');
     }
 
     /**
@@ -87,6 +109,9 @@ final class InstrumentController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $useCase = new DeleteInstrumentCaseUse($this->instrumentRepository);
+        $useCase->execute($id);
+        
+        return redirect()->route('instrument.index')->with('success', 'Instrument deleted successfully.');
     }
 }

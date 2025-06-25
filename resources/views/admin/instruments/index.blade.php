@@ -1,9 +1,13 @@
 <x-app-layout>
+    <section class="container mx-auto">
+        <div class="my-4 text-end">
+            <a href="{{ route($routePrefix . '.create') }}">
+                <x-button>
+                    {{ 'Create ' . $routePrefix }}
+                </x-button>
+            </a>
+        </div>
 
-        <a href="{{ route('instruments.create') }}">
-            <x-button>
-                hola
-            </x-button>
-        </a>
-
+        <livewire:instrument-table />
+    </section>
 </x-app-layout>
