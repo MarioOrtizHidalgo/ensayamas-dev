@@ -44,6 +44,7 @@ final class InstrumentController extends Controller
         return view('admin.instruments.form', [
             'instrument' => new ModelsInstrument(),
             'fields' => $fields,
+            'isEdit' => false,
             'routePrefix' => 'instrument'
         ]);
     }
@@ -85,6 +86,7 @@ final class InstrumentController extends Controller
             'instrument' => $instrument,
             'fields' => $fields,
             'isEdit' => true,
+            'routePrefix' => 'instrument'
         ]);
     }
 

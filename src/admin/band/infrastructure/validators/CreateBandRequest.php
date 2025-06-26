@@ -16,7 +16,7 @@ class CreateBandRequest extends FormRequest
         return [
             'name' => 'required|max:255|min:5',
             'location' => 'required|max:255|min:5',
-            'invite_code' => 'required|max:18|min:4|unique:band,invite_code'
+            'invite_code' => 'required|max:18|min:4|unique:bands,invite_code'
         ];
     }
 }

@@ -22,9 +22,9 @@
 
         <!-- Código de invitación -->
         <div>
-            <label for="inviteCode" class="block text-sm font-medium text-gray-700">Código de invitación</label>
-            <input id="inviteCode" name="inviteCode" type="text" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2" value="{{ old('inviteCode') }}">
-            @error('inviteCode')
+            <label for="invite_code" class="block text-sm font-medium text-gray-700">Código de invitación</label>
+            <input id="invite_code" name="invite_code" type="text" required class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm px-3 py-2" value="{{ old('invite_code') }}">
+            @error('invite_code')
                 <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
             @enderror
         </div>

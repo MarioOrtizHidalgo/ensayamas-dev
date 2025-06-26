@@ -32,7 +32,7 @@ final class BandController extends Controller
             null,
             $request->name,
             $request->location,
-            Str::upper($request->inviteCode)
+            Str::upper($request->invite_code)
         );
 
         $useCase = new SaveBandCaseUse($this->bandRepository);
