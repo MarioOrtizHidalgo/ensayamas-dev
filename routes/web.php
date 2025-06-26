@@ -17,3 +17,4 @@ Route::middleware([
 });
 
 Route::group([], base_path('src/admin/instrument/infrastructure/routes/web.php'));
+Route::group([], base_path('src/admin/band/infrastructure/routes/web.php'));
